@@ -15,7 +15,6 @@ flourish_weekly = flourish_weekly.assign(index_copy=flourish_weekly.index)
 flourish_weekly['Month'] = flourish_weekly['index_copy'].dt.strftime('%b %d, %Y')
 flourish_weekly.to_csv('output_w.csv')
 
-! pip install fredapi
 from fredapi import Fred
 indeed_codes = ['IHLIDXUSTPACCO',
  'IHLIDXUSTPADMIASSI',
