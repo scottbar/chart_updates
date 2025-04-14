@@ -21,7 +21,7 @@ jobs:
           pip install -r requirements.txt   # Only include this if you have dependencies
       - name: Run the Python script
         env:
-          API_KEY: ${{ secrets.FRED_API }}   # Add this line to pass the secret
+          FRED_API: ${{ secrets.FRED_API }}   # Add this line to pass the secret
         run: python update.py   # Replace with your script filename
       
       - name: Commit and push changes
