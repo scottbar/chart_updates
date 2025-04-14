@@ -66,7 +66,8 @@ indeed_codes = ['IHLIDXUSTPACCO',
 
 import os
 fred_api_key = os.getenv('FRED_API')
-
+if not fred_api_key:
+    raise ValueError("FRED_API_KEY environment variable is not set" + fred_api_key)
 
 fred = Fred(api_key=fred_api_key)
 col_names = pd.DataFrame({series:fred.get_series_info(series) for series in indeed_codes})
