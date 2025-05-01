@@ -10,10 +10,26 @@ flourish = flourish.sort_index()
 flourish = flourish.div(1000000)
 flourish = flourish.rolling(window=7).mean()
 flourish.index = pd.to_datetime(flourish.index, format='%Y-%m-%d')  # Example format
-flourish_weekly = flourish.resample('W-SUN').bfill()
+flourish_weekly = flourish.resample('W-FRI').bfill()
 flourish_weekly = flourish_weekly.assign(index_copy=flourish_weekly.index)
 flourish_weekly['Month'] = flourish_weekly['index_copy'].dt.strftime('%b %d, %Y')
 flourish_weekly.to_csv('output_w.csv')
+
+dataP = pd.read_csv('https://opendata.arcgis.com/api/v3/datasets/75619cb86e5f4beeb7dab9629d861acf_0/downloads/data?format=csv&spatialRefId=4326&where=1=1')
+usports = dataP[dataP['ISO3'] == 'USA']
+usports['date'] = pd.to_datetime(usports['date'], format='mixed')
+usports['date'] = usports['date'].dt.strftime('%Y-%m-%d')
+flourish = usports.pivot(index='date', columns='portname', values='import')
+flourish = flourish.sort_index()
+flourish = flourish.div(1000)
+flourish = flourish.rolling(window=7).mean()
+flourish.index = pd.to_datetime(flourish.index, format='%Y-%m-%d')  # Example format
+flourish_weekly = flourish.resample('W-FRI').bfill()
+flourish_weekly = flourish_weekly.assign(index_copy=flourish_weekly.index)
+flourish_weekly['Week'] = flourish_weekly['index_copy'].dt.strftime('%b %d, %Y')
+flourish_weekly.to_csv('output_ports_w.csv')
+
+
 
 from fredapi import Fred
 indeed_codes = ['IHLIDXUSTPACCO',
