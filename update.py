@@ -15,7 +15,7 @@ flourish_weekly = flourish_weekly.assign(index_copy=flourish_weekly.index)
 flourish_weekly['Month'] = flourish_weekly['index_copy'].dt.strftime('%b %d, %Y')
 flourish_weekly.to_csv('output_w.csv')
 
-dataP = pd.read_csv('https://opendata.arcgis.com/api/v3/datasets/75619cb86e5f4beeb7dab9629d861acf_0/downloads/data?format=csv&spatialRefId=4326&where=1=1')
+dataP = pd.read_csv('https://opendata.arcgis.com/api/v3/datasets/959214444157458aad969389b3ebe1a0_0/downloads/data?format=csv&spatialRefId=4326&where=1=1')
 usports = dataP[dataP['ISO3'] == 'USA']
 usports['date'] = pd.to_datetime(usports['date'], format='mixed')
 usports['date'] = usports['date'].dt.strftime('%Y-%m-%d')
